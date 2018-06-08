@@ -5,38 +5,35 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.awt.*;
-import java.applet.Applet;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
-import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseMotionListener;
+
+
 
 /**
  * A solitaire game passed down through my family
  * Created by Hannah Detlaff on 6/7/2018.
  */
-public class WietzelSpecialGame implements MouseListener, MouseMotionListener{
+public class WietzelSpecialGame extends Component implements MouseListener, MouseMotionListener{
     private Deck deck;
     private static final String cardback= "CardBack.png";
     private ArrayList<Card>[] gamePos;
     private JFrame frame = new JFrame("Wietzel Special");
-    private Component test;
 
 
     public WietzelSpecialGame(){
-        test = new Component() {
-            @Override
-            public boolean action(Event evt, Object what) {
-                return super.action(evt, what);
-            }
-        };
         deck = new Deck();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(test);
-        frame.setVisible(true);
-        //System.out.println(deck);
         gamePos = new ArrayList[7];
         deal();
         run();
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000,1000);
+        Card card = new Card(gamePos[0].get(0).getImageName());
+        System.out.print(gamePos[0].get(0).getImageName());
+        //frame.add(card.getImg());
+        frame.setVisible(true);
+        //System.out.println(deck);
+
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -111,8 +108,12 @@ public class WietzelSpecialGame implements MouseListener, MouseMotionListener{
         System.out.println(col6);
         System.out.println(col7);
 
+
     }
 
+    public void paint(Graphics g){
+        g.drawImage(gamePos[0].get(0).getImg(), 0, 0, null);
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
 
